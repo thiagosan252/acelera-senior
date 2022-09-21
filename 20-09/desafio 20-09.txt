@@ -1,0 +1,22 @@
+
+
+O usuario precisa logar no sistema para realizar o cadastro:
+
+Funcionario - Classe Pai
+
+	Nome
+	salarioLiquido
+	cpf
+
+Gerente
+	String Regional(estado)
+	Double MetaRegional
+	
+	OBS: O salario do gerente é de R$60 a hora e tem um desconto de 15% de imposto
+
+Coordenador 
+	String Loja
+	Double MetaDaLoja
+	
+	OBS: O salario do coordenador é de R$40 a hora e tem um desconto de 7% de imposto
+	
