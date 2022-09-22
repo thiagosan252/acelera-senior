@@ -1,0 +1,10 @@
+./Coordenador.java
+./Gerente.java
+./ICoordenador.java
+./Login.java
+./repositorio/RepositorioCoordenador.java
+./repositorio/RepositorioGerente.java
+./Desafio.java
+./Usuario.java
+./Funcionario.java
+./IGerente.java
