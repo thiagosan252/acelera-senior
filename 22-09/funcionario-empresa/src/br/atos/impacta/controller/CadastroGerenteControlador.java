@@ -16,6 +16,7 @@ public class CadastroGerenteControlador implements ActionListener {
 
 	JFrame jFrameAtual;
 	JFrame jFrameMenuInicial;
+	boolean edit = false;
 
 	JTextField nomeJTextField;
 	JTextField cpfJTextField;
@@ -25,7 +26,7 @@ public class CadastroGerenteControlador implements ActionListener {
 
 	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio,
 			JTextField nomeJTextField, JTextField cpfJTextField, JTextField regionalJTextField,
-			JTextField metaRegionalJTextField, JTextField horasTrabJTextField) {
+			JTextField metaRegionalJTextField, JTextField horasTrabJTextField, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -35,19 +36,27 @@ public class CadastroGerenteControlador implements ActionListener {
 		this.regionalJTextField = regionalJTextField;
 		this.metaRegionalJTextField = metaRegionalJTextField;
 		this.horasTrabJTextField = horasTrabJTextField;
+		this.edit = edit;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
-			JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+		if (!this.edit) {
+			if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+			} else {
+				if (this.save()) {
+					jFrameAtual.setVisible(false);
+					jFrameMenuInicial.setVisible(true);
+				}
+
+			}
 		} else {
 			if (this.save()) {
 				jFrameAtual.setVisible(false);
 				jFrameMenuInicial.setVisible(true);
 			}
-
 		}
 
 	}
@@ -68,13 +77,22 @@ public class CadastroGerenteControlador implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
 
 		}
-
-		if (repositorio.salvarGerente(gerente)) {
-			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
-			return true;
+		if (!this.edit) {
+			if (repositorio.salvarGerente(gerente)) {
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
+				return false;
+			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
-			return false;
+			if (repositorio.alterarGerente(gerente, cpfJTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "Gerente atualizado com sucesso.");
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Falha ao atualizar.");
+				return true;
+			}
 		}
 	}
 

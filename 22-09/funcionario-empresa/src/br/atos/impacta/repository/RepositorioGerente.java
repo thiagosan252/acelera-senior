@@ -9,7 +9,7 @@ import br.atos.impacta.model.IGerente;
 public class RepositorioGerente implements IGerente {
 
 	private List<Gerente> gerentes = new ArrayList<Gerente>();
-
+	
 	@Override
 	public boolean salvarGerente(Gerente gerente) {
 		try {
@@ -44,7 +44,7 @@ public class RepositorioGerente implements IGerente {
 			System.out.println("Erro ao atualizar: " + e);
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override

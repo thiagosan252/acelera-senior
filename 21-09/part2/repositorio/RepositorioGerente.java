@@ -44,7 +44,7 @@ public class RepositorioGerente implements IGerente {
             System.out.println("Erro ao atualizar: " + e);
             return false;
         }
-        return false;
+        return true;
     }
 
     @Override

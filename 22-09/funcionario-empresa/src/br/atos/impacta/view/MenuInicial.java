@@ -1,12 +1,15 @@
 package br.atos.impacta.view;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -16,15 +19,15 @@ import br.atos.impacta.controller.MenuInicialControlador;
 public class MenuInicial implements Telas {
 
 	private final String MENU_TOP_LABEL = "Cadastro de Funcionário";
-	private final String MENU_OPTION_EXIT = "[0] Sair";
 	private final String MENU_SEND_BUTTON_TEXT = "Enviar";
-	private final int COLUMNS = 10;
+	private final String MENU_EXIT_BUTTON_TEXT = "Fechar";
+	private final int COLUMNS = 20;
 
 	@Override
 	public void showMenu() {
 
 		JFrame jFrame = new JFrame();
-		jFrame.setSize(200, 300);
+		jFrame.setSize(280, 350);
 		jFrame.setTitle(MENU_TOP_LABEL);
 		jFrame.setLocation(300, 300);
 		jFrame.add(createPanel(jFrame));
@@ -51,6 +54,15 @@ public class MenuInicial implements Telas {
 
 		jButton.addActionListener(menuInicialControlador);
 
+		JButton jButton1 = new JButton(MENU_EXIT_BUTTON_TEXT);
+		jPanel.add(jButton1);
+		jButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Obrigado. Volte sempre!");
+				System.exit(0);
+			}
+		});
+		
 		return jPanel;
 	}
 
@@ -58,7 +70,7 @@ public class MenuInicial implements Telas {
 	public String createMenuOptions() {
 		List<String> options = Arrays.asList("Início", "[1] Cadastro do Gerente", "[2] Cadastro do Coordenador",
 				"[3] Listar Gerentes", "[4] Listar Coordenadores", "[5] Deletar Gerente", "[6] Deletar Coordenador",
-				MENU_OPTION_EXIT);
+				"[7] Alterar Gerente", "[8] Alterar Coordenador");
 		String opts = "<html>";
 
 		for (String op : options) {

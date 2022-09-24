@@ -1,6 +1,8 @@
 package br.atos.impacta.view;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,32 +11,37 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.atos.impacta.controller.CadastroGerenteControlador;
+import br.atos.impacta.model.Gerente;
 import br.atos.impacta.repository.RepositorioGerente;
 
 public class CadastroGerente implements Telas {
 
 	private final String MENU_TOP_LABEL = "Cadastro de Gerente";
 	private final String MENU_SEND_BUTTON_TEXT = "Salvar";
+	private final String MENU_BACK_BUTTON_TEXT = "Voltar";
 	private final int COLUMNS = 10;
 
+	JFrame jFrameAtual;
 	JFrame jFrameMenuInicial;
-	RepositorioGerente repositorioGerente;
+	RepositorioGerente repositorio;
+	Gerente gerente;
 
-	public CadastroGerente(JFrame jFrameMenuInicial, RepositorioGerente repositorioGerente) {
+	public CadastroGerente(JFrame jFrameMenuInicial, RepositorioGerente repositorio, Gerente gerente) {
 		this.jFrameMenuInicial = jFrameMenuInicial;
-		this.repositorioGerente = repositorioGerente;
+		this.repositorio = repositorio;
+		this.gerente = gerente;
 	}
 
 	@Override
 	public void showMenu() {
 
-		JFrame jFrame = new JFrame();
-		jFrame.setSize(200, 400);
-		jFrame.setTitle(MENU_TOP_LABEL);
-		jFrame.setLocation(300, 300);
-		jFrame.add(createPanel(jFrame));
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.setVisible(true);
+		jFrameAtual = new JFrame();
+		jFrameAtual.setSize(200, 400);
+		jFrameAtual.setTitle(MENU_TOP_LABEL);
+		jFrameAtual.setLocation(300, 300);
+		jFrameAtual.add(createPanel(jFrameAtual));
+		jFrameAtual.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jFrameAtual.setVisible(true);
 
 	}
 
@@ -43,33 +50,66 @@ public class CadastroGerente implements Telas {
 		JPanel jPanel = new JPanel();
 		jPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		jPanel.add(new JLabel("Nome:"));
 		JTextField jTextField = new JTextField(COLUMNS);
-		jPanel.add(jTextField);
-
-		jPanel.add(new JLabel("CPF:"));
 		JTextField jTextField1 = new JTextField(COLUMNS);
-		jPanel.add(jTextField1);
-
-		jPanel.add(new JLabel("Regional:"));
 		JTextField jTextField2 = new JTextField(COLUMNS);
-		jPanel.add(jTextField2);
-
-		jPanel.add(new JLabel("Meta Regional:"));
 		JTextField jTextField3 = new JTextField(COLUMNS);
-		jPanel.add(jTextField3);
-
-		jPanel.add(new JLabel("Horas Trabalhadas:"));
 		JTextField jTextField4 = new JTextField(COLUMNS);
-		jPanel.add(jTextField4);
+
+		if (this.gerente == null) {
+			jPanel.add(new JLabel("Nome:"));
+			jPanel.add(jTextField);
+
+			jPanel.add(new JLabel("CPF:"));
+			jPanel.add(jTextField1);
+
+			jPanel.add(new JLabel("Regional:"));
+			jPanel.add(jTextField2);
+
+			jPanel.add(new JLabel("Meta Regional:"));
+			jPanel.add(jTextField3);
+
+			jPanel.add(new JLabel("Horas Trabalhadas:"));
+			jPanel.add(jTextField4);
+		} else {
+			jPanel.add(new JLabel("Nome:"));
+			jTextField.setText(gerente.getNome());
+			jPanel.add(jTextField);
+
+			jPanel.add(new JLabel("CPF:"));
+			jTextField1.setText(gerente.getCpf());
+			jTextField1.setEditable(false);
+			jPanel.add(jTextField1);
+
+			jPanel.add(new JLabel("Regional:"));
+			jTextField2.setText(gerente.getRegional());
+			jPanel.add(jTextField2);
+
+			jPanel.add(new JLabel("Meta Regional:"));
+			jTextField3.setText(gerente.getMetaRegional().toString());
+			jPanel.add(jTextField3);
+
+			jPanel.add(new JLabel("Horas Trabalhadas:"));
+			jPanel.add(jTextField4);
+		}
 
 		JButton jButton = new JButton(MENU_SEND_BUTTON_TEXT);
 		jPanel.add(jButton);
 
 		CadastroGerenteControlador cadastroGerenteControlador = new CadastroGerenteControlador(jFrame,
-				this.jFrameMenuInicial, this.repositorioGerente, jTextField, jTextField1, jTextField2, jTextField3, jTextField4);
+				this.jFrameMenuInicial, this.repositorio, jTextField, jTextField1, jTextField2, jTextField3,
+				jTextField4, (gerente != null) ? true : false);
 
 		jButton.addActionListener(cadastroGerenteControlador);
+
+		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);
+		jPanel.add(jButton1);
+		jButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jFrameAtual.setVisible(false);
+				jFrameMenuInicial.setVisible(true);
+			}
+		});
 
 		return jPanel;
 	}

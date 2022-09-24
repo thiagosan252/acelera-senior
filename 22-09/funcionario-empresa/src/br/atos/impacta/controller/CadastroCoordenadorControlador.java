@@ -16,6 +16,7 @@ public class CadastroCoordenadorControlador implements ActionListener {
 
 	JFrame jFrameAtual;
 	JFrame jFrameMenuInicial;
+	boolean edit = false;
 
 	JTextField nomeJTextField;
 	JTextField cpfJTextField;
@@ -25,7 +26,7 @@ public class CadastroCoordenadorControlador implements ActionListener {
 
 	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial,
 			RepositorioCoordenador repositorio, JTextField nomeJTextField, JTextField cpfJTextField,
-			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField) {
+			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -35,18 +36,25 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		this.lojaJTextField = lojaJTextField;
 		this.metaDaLojaJTextField = metaDaLojaJTextField;
 		this.horasTrabJTextField = horasTrabJTextField;
+		this.edit = edit;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
-			JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+		if (!this.edit) {
+			if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+			} else {
+				if (this.save()) {
+					jFrameAtual.setVisible(false);
+					jFrameMenuInicial.setVisible(true);
+				}
+			}
 		} else {
 			if (this.save()) {
 				jFrameAtual.setVisible(false);
 				jFrameMenuInicial.setVisible(true);
 			}
-
 		}
 	}
 
@@ -66,13 +74,22 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
 		}
-
-		if (repositorio.salvarCoordenador(coordenador)) {
-			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
-			return true;
+		if (!this.edit) {
+			if (repositorio.salvarCoordenador(coordenador)) {
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
+				return false;
+			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
-			return false;
+			if (repositorio.alterarCoordenador(coordenador, cpfJTextField.getText())) {
+				JOptionPane.showMessageDialog(null, "Coordenador atualizado com sucesso.");
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Falha ao atualizar.");
+				return true;
+			}
 		}
 	}
 
