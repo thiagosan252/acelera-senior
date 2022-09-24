@@ -10,6 +10,8 @@ import br.atos.impacta.repository.RepositorioCoordenador;
 import br.atos.impacta.repository.RepositorioGerente;
 import br.atos.impacta.view.CadastroCoordenador;
 import br.atos.impacta.view.CadastroGerente;
+import br.atos.impacta.view.DeletarCoordenador;
+import br.atos.impacta.view.DeletarGerente;
 import br.atos.impacta.view.ListarCoordenador;
 import br.atos.impacta.view.ListarGerente;
 
@@ -17,7 +19,7 @@ public class MenuInicialControlador implements ActionListener {
 
 	private JTextField jTextFieldOpt;
 	private JFrame jFrameDefault;
-	
+
 	RepositorioGerente repositorioGerente = new RepositorioGerente();
 	RepositorioCoordenador repositorioCoordenador = new RepositorioCoordenador();
 
@@ -36,27 +38,38 @@ public class MenuInicialControlador implements ActionListener {
 			CadastroGerente cadastroGerente = new CadastroGerente(jFrameDefault, repositorioGerente);
 			cadastroGerente.showMenu();
 			break;
-		case "2": //Cadastrar coordenador
+		case "2": // Cadastrar coordenador
 			jFrameDefault.setVisible(false);
 			CadastroCoordenador cadastroCoordenador = new CadastroCoordenador(jFrameDefault, repositorioCoordenador);
 			cadastroCoordenador.showMenu();
 			break;
-		case "3": //Listar Gerentes
+		case "3": // Listar Gerentes
 			jFrameDefault.setVisible(false);
 			ListarGerente listarGerente = new ListarGerente(jFrameDefault, repositorioGerente);
 			listarGerente.showMenu();
-			
-//			for (Gerente t : repositorioGerente.listarGerentes()) {
-//				System.out.println(t.toString());
-//			}
 			break;
 		case "4": // Listar Coordenadores
 			jFrameDefault.setVisible(false);
 			ListarCoordenador listarCoordenador = new ListarCoordenador(jFrameDefault, repositorioCoordenador);
 			listarCoordenador.showMenu();
-//			for (Coordenador t : repositorioCoordenador.listarCoordenadores()) {
-//				System.out.println(t.toString());
-//			}
+			break;
+		case "5": // deletar Gerente
+			jFrameDefault.setVisible(false);
+			DeletarGerente deletarGerente = new DeletarGerente(jFrameDefault, repositorioGerente);
+			deletarGerente.showMenu();
+			break;
+		case "6": // deletar coordenador
+			jFrameDefault.setVisible(false);
+			DeletarCoordenador deletarCoordenador = new DeletarCoordenador(jFrameDefault, repositorioCoordenador);
+			deletarCoordenador.showMenu();
+			break;
+		case "7": // alterar Gerente
+			jFrameDefault.setVisible(false);
+			
+			break;
+		case "8": // alterar coordenador
+			jFrameDefault.setVisible(false);
+			
 			break;
 		case "0":
 			System.out.println("Saindo...");
@@ -69,4 +82,3 @@ public class MenuInicialControlador implements ActionListener {
 	}
 
 }
-

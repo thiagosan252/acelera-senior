@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.atos.impacta.model.Gerente;
@@ -22,9 +23,9 @@ public class CadastroGerenteControlador implements ActionListener {
 	JTextField metaRegionalJTextField;
 	JTextField horasTrabJTextField;
 
-	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio, JTextField nomeJTextField,
-			JTextField cpfJTextField, JTextField regionalJTextField, JTextField metaRegionalJTextField,
-			JTextField horasTrabJTextField) {
+	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio,
+			JTextField nomeJTextField, JTextField cpfJTextField, JTextField regionalJTextField,
+			JTextField metaRegionalJTextField, JTextField horasTrabJTextField) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -38,23 +39,42 @@ public class CadastroGerenteControlador implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.save();
-		jFrameAtual.setVisible(false);
-		jFrameMenuInicial.setVisible(true);
+
+		if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
+			JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+		} else {
+			if (this.save()) {
+				jFrameAtual.setVisible(false);
+				jFrameMenuInicial.setVisible(true);
+			}
+
+		}
+
 	}
 
-	private void save() {
+	private boolean save() {
 		Gerente gerente = new Gerente();
 		gerente.setNome(nomeJTextField.getText());
 		gerente.setCpf(cpfJTextField.getText());
 		gerente.setRegional(regionalJTextField.getText());
-		gerente.setMetaRegional(Double.valueOf(metaRegionalJTextField.getText()));
-		gerente.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
+		try {
+			gerente.setMetaRegional(Double.valueOf(metaRegionalJTextField.getText()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Valor de meta regional inválido.");
+		}
+		try {
+			gerente.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
+
+		}
 
 		if (repositorio.salvarGerente(gerente)) {
-			System.out.println("Cadastrado com sucesso.");
+			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+			return true;
 		} else {
-			System.out.println("Falha ao cadastrar.");
+			JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
+			return false;
 		}
 	}
 

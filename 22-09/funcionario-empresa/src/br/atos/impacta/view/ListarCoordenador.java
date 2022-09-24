@@ -1,7 +1,12 @@
 package br.atos.impacta.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,43 +18,54 @@ import br.atos.impacta.repository.RepositorioCoordenador;
 public class ListarCoordenador implements Telas {
 
 	private final String MENU_TOP_LABEL = "Lista de Coordenadores";
-	JFrame jFrameMenuInicial;
-	RepositorioCoordenador repositorioCoordenador;
+	private final String MENU_BACK_BUTTON_TEXT = "Voltar";
 
-	public ListarCoordenador(JFrame jFrameMenuInicial, RepositorioCoordenador repositorioCoordenador) {
+	JFrame jFrameMenuInicial;
+	JFrame jFrameAtual;
+	RepositorioCoordenador repositorio;
+
+	public ListarCoordenador(JFrame jFrameMenuInicial, RepositorioCoordenador repositorio) {
 		super();
 		this.jFrameMenuInicial = jFrameMenuInicial;
-		this.repositorioCoordenador = repositorioCoordenador;
+		this.repositorio = repositorio;
 	}
 
 	@Override
 	public void showMenu() {
 
-		JFrame jFrame = new JFrame();
-		jFrame.setSize(500, 600);
-		jFrame.setTitle(MENU_TOP_LABEL);
-
-		jFrame.add(createPanel(jFrame));
-
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.setVisible(true);
+		jFrameAtual = new JFrame();
+		jFrameAtual.setSize(500, 600);
+		jFrameAtual.setTitle(MENU_TOP_LABEL);
+		jFrameAtual.add(createPanel(jFrameAtual));
+		jFrameAtual.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jFrameAtual.setVisible(true);
 
 	}
 
 	@Override
 	public JPanel createPanel(JFrame jFrame) {
-		List<Coordenador> lista = repositorioCoordenador.listarCoordenadores();
+		List<Coordenador> lista = repositorio.listarCoordenadores();
 		String colunas[] = { "Nome", "CPF", "Loga", "Meta Loja", "Salário Liquido" };
 
-		String[][] linhas = new String[lista.size()][colunas.length];
+		Object[][] linhas = new Object[lista.size()][colunas.length];
 
 		this.fillTable(lista, linhas);
-		JTable tabela = new JTable(linhas, colunas);
-		tabela.setBounds(30, 40, 200, 300);
 
-		JScrollPane jScrollPane = new JScrollPane(tabela);
+		JTable jTable = new JTable(linhas, colunas);
+		jTable.setBounds(30, 40, 200, 300);
+
+		JScrollPane jScrollPane = new JScrollPane(jTable);
 		JPanel jPanel = new JPanel();
 		jPanel.add(jScrollPane);
+
+		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);
+		jPanel.add(jButton1);
+		jButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jFrameAtual.setVisible(false);
+				jFrameMenuInicial.setVisible(true);
+			}
+		});
 
 		return jPanel;
 	}
@@ -60,25 +76,26 @@ public class ListarCoordenador implements Telas {
 		return null;
 	}
 
-	private void fillTable(List<Coordenador> lista, String[][] linhas) {
+	private void fillTable(List<Coordenador> lista, Object[][] linhas) {
 		int posicaoLinha = 0;
 		int posicaoColuna = 0;
 
-		for (Coordenador gerente : lista) {
+		for (Coordenador coordenador : lista) {
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getNome();
+			linhas[posicaoLinha][posicaoColuna] = coordenador.getNome().toUpperCase();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getCpf();
+			linhas[posicaoLinha][posicaoColuna] = coordenador.getCpf();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getLoja();
+			linhas[posicaoLinha][posicaoColuna] = coordenador.getLoja().toUpperCase();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getMetaDaLoja().toString();
+			linhas[posicaoLinha][posicaoColuna] = coordenador.getMetaDaLoja().toString();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getSalarioLiquido().toString();
+			linhas[posicaoLinha][posicaoColuna] = "R$ " + new BigDecimal(coordenador.getSalarioLiquido())
+					.setScale(2, RoundingMode.HALF_EVEN).toPlainString();
 			posicaoColuna = 0;
 			posicaoLinha++;
 

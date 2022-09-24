@@ -29,7 +29,7 @@ public class CadastroGerente implements Telas {
 	public void showMenu() {
 
 		JFrame jFrame = new JFrame();
-		jFrame.setSize(200, 200);
+		jFrame.setSize(200, 400);
 		jFrame.setTitle(MENU_TOP_LABEL);
 		jFrame.setLocation(300, 300);
 		jFrame.add(createPanel(jFrame));

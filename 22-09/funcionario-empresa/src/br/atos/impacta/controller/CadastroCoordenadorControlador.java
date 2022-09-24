@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.atos.impacta.model.Coordenador;
@@ -22,9 +23,9 @@ public class CadastroCoordenadorControlador implements ActionListener {
 	JTextField metaDaLojaJTextField;
 	JTextField horasTrabJTextField;
 
-	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioCoordenador repositorio, JTextField nomeJTextField,
-			JTextField cpfJTextField, JTextField lojaJTextField, JTextField metaDaLojaJTextField,
-			JTextField horasTrabJTextField) {
+	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial,
+			RepositorioCoordenador repositorio, JTextField nomeJTextField, JTextField cpfJTextField,
+			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -38,23 +39,40 @@ public class CadastroCoordenadorControlador implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.save();
-		jFrameAtual.setVisible(false);
-		jFrameMenuInicial.setVisible(true);
+		if (repositorio.verificarDuplicidade(cpfJTextField.getText())) {
+			JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+		} else {
+			if (this.save()) {
+				jFrameAtual.setVisible(false);
+				jFrameMenuInicial.setVisible(true);
+			}
+
+		}
 	}
 
-	private void save() {
+	private boolean save() {
 		Coordenador coordenador = new Coordenador();
 		coordenador.setNome(nomeJTextField.getText());
 		coordenador.setCpf(cpfJTextField.getText());
 		coordenador.setLoja(lojaJTextField.getText());
-		coordenador.setMetaDaLoja(Double.valueOf(metaDaLojaJTextField.getText()));
-		coordenador.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
+		try {
+			coordenador.setMetaDaLoja(Double.valueOf(metaDaLojaJTextField.getText()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Valor de meta da loja inválida.");
+		}
+
+		try {
+			coordenador.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
+		}
 
 		if (repositorio.salvarCoordenador(coordenador)) {
-			System.out.println("Cadastrado com sucesso.");
+			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+			return true;
 		} else {
-			System.out.println("Falha ao cadastrar.");
+			JOptionPane.showMessageDialog(null, "Falha ao cadastrar.");
+			return false;
 		}
 	}
 

@@ -24,7 +24,7 @@ public class MenuInicial implements Telas {
 	public void showMenu() {
 
 		JFrame jFrame = new JFrame();
-		jFrame.setSize(200, 200);
+		jFrame.setSize(200, 300);
 		jFrame.setTitle(MENU_TOP_LABEL);
 		jFrame.setLocation(300, 300);
 		jFrame.add(createPanel(jFrame));
@@ -57,7 +57,8 @@ public class MenuInicial implements Telas {
 	@Override
 	public String createMenuOptions() {
 		List<String> options = Arrays.asList("Início", "[1] Cadastro do Gerente", "[2] Cadastro do Coordenador",
-				"[3] Listar Gerentes", "[4] Listar Coordenadores", MENU_OPTION_EXIT);
+				"[3] Listar Gerentes", "[4] Listar Coordenadores", "[5] Deletar Gerente", "[6] Deletar Coordenador",
+				MENU_OPTION_EXIT);
 		String opts = "<html>";
 
 		for (String op : options) {
