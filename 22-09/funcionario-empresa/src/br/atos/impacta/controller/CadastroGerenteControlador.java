@@ -11,7 +11,7 @@ import br.atos.impacta.repository.RepositorioGerente;
 
 public class CadastroGerenteControlador implements ActionListener {
 
-	RepositorioGerente repositorioGerente = new RepositorioGerente();
+	RepositorioGerente repositorio;
 
 	JFrame jFrameAtual;
 	JFrame jFrameMenuInicial;
@@ -22,11 +22,13 @@ public class CadastroGerenteControlador implements ActionListener {
 	JTextField metaRegionalJTextField;
 	JTextField horasTrabJTextField;
 
-	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, JTextField nomeJTextField,
+	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio, JTextField nomeJTextField,
 			JTextField cpfJTextField, JTextField regionalJTextField, JTextField metaRegionalJTextField,
 			JTextField horasTrabJTextField) {
+		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
+		this.repositorio = repositorio;
 		this.nomeJTextField = nomeJTextField;
 		this.cpfJTextField = cpfJTextField;
 		this.regionalJTextField = regionalJTextField;
@@ -49,7 +51,7 @@ public class CadastroGerenteControlador implements ActionListener {
 		gerente.setMetaRegional(Double.valueOf(metaRegionalJTextField.getText()));
 		gerente.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
 
-		if (repositorioGerente.salvarGerente(gerente)) {
+		if (repositorio.salvarGerente(gerente)) {
 			System.out.println("Cadastrado com sucesso.");
 		} else {
 			System.out.println("Falha ao cadastrar.");

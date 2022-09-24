@@ -11,7 +11,7 @@ import br.atos.impacta.repository.RepositorioCoordenador;
 
 public class CadastroCoordenadorControlador implements ActionListener {
 
-	RepositorioCoordenador repositorioCoordenador = new RepositorioCoordenador();
+	RepositorioCoordenador repositorio;
 
 	JFrame jFrameAtual;
 	JFrame jFrameMenuInicial;
@@ -22,11 +22,13 @@ public class CadastroCoordenadorControlador implements ActionListener {
 	JTextField metaDaLojaJTextField;
 	JTextField horasTrabJTextField;
 
-	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, JTextField nomeJTextField,
+	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioCoordenador repositorio, JTextField nomeJTextField,
 			JTextField cpfJTextField, JTextField lojaJTextField, JTextField metaDaLojaJTextField,
 			JTextField horasTrabJTextField) {
+		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
+		this.repositorio = repositorio;
 		this.nomeJTextField = nomeJTextField;
 		this.cpfJTextField = cpfJTextField;
 		this.lojaJTextField = lojaJTextField;
@@ -49,7 +51,7 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		coordenador.setMetaDaLoja(Double.valueOf(metaDaLojaJTextField.getText()));
 		coordenador.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
 
-		if (repositorioCoordenador.salvarCoordenador(coordenador)) {
+		if (repositorio.salvarCoordenador(coordenador)) {
 			System.out.println("Cadastrado com sucesso.");
 		} else {
 			System.out.println("Falha ao cadastrar.");

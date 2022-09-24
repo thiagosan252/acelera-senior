@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.atos.impacta.controller.CadastroGerenteControlador;
+import br.atos.impacta.repository.RepositorioGerente;
 
 public class CadastroGerente implements Telas {
 
@@ -17,9 +18,11 @@ public class CadastroGerente implements Telas {
 	private final int COLUMNS = 10;
 
 	JFrame jFrameMenuInicial;
+	RepositorioGerente repositorioGerente;
 
-	public CadastroGerente(JFrame jFrameMenuInicial) {
+	public CadastroGerente(JFrame jFrameMenuInicial, RepositorioGerente repositorioGerente) {
 		this.jFrameMenuInicial = jFrameMenuInicial;
+		this.repositorioGerente = repositorioGerente;
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class CadastroGerente implements Telas {
 		jPanel.add(jButton);
 
 		CadastroGerenteControlador cadastroGerenteControlador = new CadastroGerenteControlador(jFrame,
-				this.jFrameMenuInicial, jTextField, jTextField1, jTextField2, jTextField3, jTextField4);
+				this.jFrameMenuInicial, this.repositorioGerente, jTextField, jTextField1, jTextField2, jTextField3, jTextField4);
 
 		jButton.addActionListener(cadastroGerenteControlador);
 

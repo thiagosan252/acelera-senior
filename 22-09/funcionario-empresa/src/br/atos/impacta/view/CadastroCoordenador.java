@@ -8,7 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import br.atos.impacta.controller.CadastroGerenteControlador;
+import br.atos.impacta.controller.CadastroCoordenadorControlador;
+import br.atos.impacta.repository.RepositorioCoordenador;
 
 public class CadastroCoordenador implements Telas {
 
@@ -17,9 +18,11 @@ public class CadastroCoordenador implements Telas {
 	private final int COLUMNS = 10;
 
 	JFrame jFrameMenuInicial;
+	RepositorioCoordenador repositorioCoordenador;
 
-	public CadastroCoordenador(JFrame jFrameMenuInicial) {
+	public CadastroCoordenador(JFrame jFrameMenuInicial, RepositorioCoordenador repositorioCoordenador) {
 		this.jFrameMenuInicial = jFrameMenuInicial;
+		this.repositorioCoordenador = repositorioCoordenador;
 	}
 
 	@Override
@@ -63,10 +66,10 @@ public class CadastroCoordenador implements Telas {
 		JButton jButton = new JButton(MENU_SEND_BUTTON_TEXT);
 		jPanel.add(jButton);
 
-		CadastroGerenteControlador cadastroGerenteControlador = new CadastroGerenteControlador(jFrame,
-				this.jFrameMenuInicial, jTextField, jTextField1, jTextField2, jTextField3, jTextField4);
+		CadastroCoordenadorControlador cadastroCoordenadorControlador = new CadastroCoordenadorControlador(jFrame,
+				this.jFrameMenuInicial, this.repositorioCoordenador, jTextField, jTextField1, jTextField2, jTextField3, jTextField4);
 
-		jButton.addActionListener(cadastroGerenteControlador);
+		jButton.addActionListener(cadastroCoordenadorControlador);
 
 		return jPanel;
 	}

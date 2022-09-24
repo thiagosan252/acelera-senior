@@ -6,10 +6,7 @@ public class Controlador {
 
 	public void start() {
 		
-		System.out.println("Programa iniciando...");
-		
 		new MenuInicial().showMenu();
-		System.out.println("Programa iniciado");
 		
 	}
 }

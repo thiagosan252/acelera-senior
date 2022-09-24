@@ -19,7 +19,7 @@ public class MenuInicial implements Telas {
 	private final String MENU_OPTION_EXIT = "[0] Sair";
 	private final String MENU_SEND_BUTTON_TEXT = "Enviar";
 	private final int COLUMNS = 10;
-	
+
 	@Override
 	public void showMenu() {
 
@@ -56,8 +56,8 @@ public class MenuInicial implements Telas {
 
 	@Override
 	public String createMenuOptions() {
-		List<String> options = Arrays.asList("Início", "[1] Cadastro do Gerente", "[2] Cadastro do Coordenador", "[3] Listar Funcionários",
-				MENU_OPTION_EXIT);
+		List<String> options = Arrays.asList("Início", "[1] Cadastro do Gerente", "[2] Cadastro do Coordenador",
+				"[3] Listar Gerentes", "[4] Listar Coordenadores", MENU_OPTION_EXIT);
 		String opts = "<html>";
 
 		for (String op : options) {
