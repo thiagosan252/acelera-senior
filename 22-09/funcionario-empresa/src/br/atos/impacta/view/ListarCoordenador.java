@@ -45,7 +45,7 @@ public class ListarCoordenador implements Telas {
 	@Override
 	public JPanel createPanel(JFrame jFrame) {
 		List<Coordenador> lista = repositorio.listarCoordenadores();
-		String colunas[] = { "Nome", "CPF", "Loga", "Meta Loja", "Salário Liquido" };
+		String colunas[] = { "Nome", "CPF", "Loja", "Meta Loja", "Salário Liquido", "Endereço" };
 
 		Object[][] linhas = new Object[lista.size()][colunas.length];
 
@@ -53,10 +53,12 @@ public class ListarCoordenador implements Telas {
 
 		JTable jTable = new JTable(linhas, colunas);
 		jTable.setBounds(30, 40, 200, 300);
-
+		
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		JPanel jPanel = new JPanel();
 		jPanel.add(jScrollPane);
+		
+		
 
 		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);
 		jPanel.add(jButton1);
@@ -96,6 +98,10 @@ public class ListarCoordenador implements Telas {
 
 			linhas[posicaoLinha][posicaoColuna] = "R$ " + new BigDecimal(coordenador.getSalarioLiquido())
 					.setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+			posicaoColuna++;
+
+			linhas[posicaoLinha][posicaoColuna] = coordenador.getEndereco().getRua() + ", "
+					+ coordenador.getEndereco().getCasa() + " - " + coordenador.getEndereco().getEstado();
 			posicaoColuna = 0;
 			posicaoLinha++;
 

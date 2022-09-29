@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.atos.impacta.model.Coordenador;
+import br.atos.impacta.model.Endereco;
 import br.atos.impacta.repository.RepositorioCoordenador;
 
 public class CadastroCoordenadorControlador implements ActionListener {
@@ -23,10 +24,15 @@ public class CadastroCoordenadorControlador implements ActionListener {
 	JTextField lojaJTextField;
 	JTextField metaDaLojaJTextField;
 	JTextField horasTrabJTextField;
+	
+	JTextField estadoJTextField;
+	JTextField ruaJTextField;
+	JTextField casaJTextField;
 
 	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial,
 			RepositorioCoordenador repositorio, JTextField nomeJTextField, JTextField cpfJTextField,
-			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField, Boolean edit) {
+			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField, JTextField estadoJTextField,
+			JTextField ruaJTextField, JTextField casaJTextField, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -36,6 +42,9 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		this.lojaJTextField = lojaJTextField;
 		this.metaDaLojaJTextField = metaDaLojaJTextField;
 		this.horasTrabJTextField = horasTrabJTextField;
+		this.estadoJTextField = estadoJTextField;
+		this.ruaJTextField = ruaJTextField;
+		this.casaJTextField = casaJTextField;
 		this.edit = edit;
 	}
 
@@ -63,6 +72,7 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		coordenador.setNome(nomeJTextField.getText());
 		coordenador.setCpf(cpfJTextField.getText());
 		coordenador.setLoja(lojaJTextField.getText());
+		
 		try {
 			coordenador.setMetaDaLoja(Double.valueOf(metaDaLojaJTextField.getText()));
 		} catch (Exception e) {
@@ -74,6 +84,12 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
 		}
+		
+		Endereco endereco = new Endereco();
+		endereco.setEstado(estadoJTextField.getText());
+		endereco.setRua(ruaJTextField.getText());
+		endereco.setCasa(casaJTextField.getText());
+		coordenador.setEndereco(endereco);
 		if (!this.edit) {
 			if (repositorio.salvarCoordenador(coordenador)) {
 				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");

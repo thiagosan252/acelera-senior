@@ -14,6 +14,7 @@ public class RepositorioGerente implements IGerente {
 	public boolean salvarGerente(Gerente gerente) {
 		try {
 			gerentes.add(gerente);
+			System.out.println("Cadastrado = " + gerente.toString() + " | " + gerente.getEndereco().toString());
 		} catch (Exception e) {
 			System.out.println("Erro ao cadastrar: " + e);
 			return false;

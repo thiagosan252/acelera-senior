@@ -15,6 +15,7 @@ public class RepositorioCoordenador implements ICoordenador {
 
 		try {
 			coordenadores.add(coordenador);
+			System.out.println("Cadastrado = " + coordenador.toString() + " | " + coordenador.getEndereco().toString());
 		} catch (Exception e) {
 			System.out.println("Erro ao cadastrar: " + e);
 			return false;

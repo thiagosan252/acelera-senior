@@ -36,7 +36,7 @@ public class CadastroGerente implements Telas {
 	public void showMenu() {
 
 		jFrameAtual = new JFrame();
-		jFrameAtual.setSize(200, 400);
+		jFrameAtual.setSize(150, 550);
 		jFrameAtual.setTitle(MENU_TOP_LABEL);
 		jFrameAtual.setLocation(300, 300);
 		jFrameAtual.add(createPanel(jFrameAtual));
@@ -56,6 +56,11 @@ public class CadastroGerente implements Telas {
 		JTextField jTextField3 = new JTextField(COLUMNS);
 		JTextField jTextField4 = new JTextField(COLUMNS);
 
+		// endereco
+		JTextField jTextField5 = new JTextField(COLUMNS);
+		JTextField jTextField6 = new JTextField(COLUMNS);
+		JTextField jTextField7 = new JTextField(COLUMNS);
+
 		if (this.gerente == null) {
 			jPanel.add(new JLabel("Nome:"));
 			jPanel.add(jTextField);
@@ -71,6 +76,16 @@ public class CadastroGerente implements Telas {
 
 			jPanel.add(new JLabel("Horas Trabalhadas:"));
 			jPanel.add(jTextField4);
+
+			// endereco
+			jPanel.add(new JLabel("Estado:"));
+			jPanel.add(jTextField5);
+
+			jPanel.add(new JLabel("Rua:"));
+			jPanel.add(jTextField6);
+
+			jPanel.add(new JLabel("Número da Casa:"));
+			jPanel.add(jTextField7);
 		} else {
 			jPanel.add(new JLabel("Nome:"));
 			jTextField.setText(gerente.getNome());
@@ -91,6 +106,19 @@ public class CadastroGerente implements Telas {
 
 			jPanel.add(new JLabel("Horas Trabalhadas:"));
 			jPanel.add(jTextField4);
+
+			// endereco
+			jPanel.add(new JLabel("Estado:"));
+			jTextField5.setText(gerente.getEndereco().getEstado());
+			jPanel.add(jTextField5);
+
+			jPanel.add(new JLabel("Rua:"));
+			jTextField6.setText(gerente.getEndereco().getRua());
+			jPanel.add(jTextField6);
+
+			jPanel.add(new JLabel("Número da Casa:"));
+			jTextField7.setText(gerente.getEndereco().getCasa());
+			jPanel.add(jTextField7);
 		}
 
 		JButton jButton = new JButton(MENU_SEND_BUTTON_TEXT);
@@ -98,7 +126,7 @@ public class CadastroGerente implements Telas {
 
 		CadastroGerenteControlador cadastroGerenteControlador = new CadastroGerenteControlador(jFrame,
 				this.jFrameMenuInicial, this.repositorio, jTextField, jTextField1, jTextField2, jTextField3,
-				jTextField4, (gerente != null) ? true : false);
+				jTextField4, jTextField5, jTextField6, jTextField7, (gerente != null) ? true : false);
 
 		jButton.addActionListener(cadastroGerenteControlador);
 

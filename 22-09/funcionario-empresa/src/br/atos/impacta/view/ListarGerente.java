@@ -44,7 +44,7 @@ public class ListarGerente implements Telas {
 	@Override
 	public JPanel createPanel(JFrame jFrame) {
 		List<Gerente> lista = repositorio.listarGerentes();
-		String colunas[] = { "Nome", "CPF", "Regional", "Meta Regional", "Salário Liquido" };
+		String colunas[] = { "Nome", "CPF", "Regional", "Meta Regional", "Salário Liquido", "Endereço" };
 
 		Object[][] linhas = new Object[lista.size()][colunas.length];
 
@@ -52,11 +52,11 @@ public class ListarGerente implements Telas {
 
 		JTable jTable = new JTable(linhas, colunas);
 		jTable.setBounds(30, 40, 200, 300);
-
+		
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		JPanel jPanel = new JPanel();
 		jPanel.add(jScrollPane);
-
+		
 		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);
 		jPanel.add(jButton1);
 		jButton1.addActionListener(new ActionListener() {
@@ -92,7 +92,12 @@ public class ListarGerente implements Telas {
 			linhas[posicaoLinha][posicaoColuna] = gerente.getMetaRegional().toString();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = "R$ " + new BigDecimal(gerente.getSalarioLiquido()).setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+			linhas[posicaoLinha][posicaoColuna] = "R$ "
+					+ new BigDecimal(gerente.getSalarioLiquido()).setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+			posicaoColuna++;
+
+			linhas[posicaoLinha][posicaoColuna] = gerente.getEndereco().getRua() + ", "
+					+ gerente.getEndereco().getCasa() + " - " + gerente.getEndereco().getEstado();
 
 			posicaoColuna = 0;
 			posicaoLinha++;

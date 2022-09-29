@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import br.atos.impacta.model.Endereco;
 import br.atos.impacta.model.Gerente;
 import br.atos.impacta.repository.RepositorioGerente;
 
@@ -23,10 +24,15 @@ public class CadastroGerenteControlador implements ActionListener {
 	JTextField regionalJTextField;
 	JTextField metaRegionalJTextField;
 	JTextField horasTrabJTextField;
+	
+	JTextField estadoJTextField;
+	JTextField ruaJTextField;
+	JTextField casaJTextField;
 
 	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio,
 			JTextField nomeJTextField, JTextField cpfJTextField, JTextField regionalJTextField,
-			JTextField metaRegionalJTextField, JTextField horasTrabJTextField, Boolean edit) {
+			JTextField metaRegionalJTextField, JTextField horasTrabJTextField, JTextField estadoJTextField,
+			JTextField ruaJTextField, JTextField casaJTextField, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -36,6 +42,9 @@ public class CadastroGerenteControlador implements ActionListener {
 		this.regionalJTextField = regionalJTextField;
 		this.metaRegionalJTextField = metaRegionalJTextField;
 		this.horasTrabJTextField = horasTrabJTextField;
+		this.estadoJTextField = estadoJTextField;
+		this.ruaJTextField = ruaJTextField;
+		this.casaJTextField = casaJTextField;
 		this.edit = edit;
 	}
 
@@ -77,6 +86,12 @@ public class CadastroGerenteControlador implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
 
 		}
+		
+		Endereco endereco = new Endereco();
+		endereco.setEstado(estadoJTextField.getText());
+		endereco.setRua(ruaJTextField.getText());
+		endereco.setCasa(casaJTextField.getText());
+		gerente.setEndereco(endereco);
 		if (!this.edit) {
 			if (repositorio.salvarGerente(gerente)) {
 				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
