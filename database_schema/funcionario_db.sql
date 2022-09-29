@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS endereco;
-DROP TABLE IF EXISTS funcionario;
-DROP TABLE IF EXISTS salario;
 DROP TABLE IF EXISTS coordenador;
 DROP TABLE IF EXISTS gerente;
+DROP TABLE IF EXISTS salario;
+DROP TABLE IF EXISTS funcionario;
+DROP TABLE IF EXISTS endereco;
 
 CREATE TABLE endereco (
 	id int primary key not null,
@@ -31,8 +31,8 @@ CREATE TABLE salario (
 
 CREATE TABLE coordenador (
 	cpf_funcionario varchar(14) not null,
-	regional varchar(100) null,
-	meta_regional bigint null,
+	loja varchar(100) null,
+	meta_loja bigint null,
     
     CONSTRAINT cpf_coordenador_fk FOREIGN KEY (cpf_funcionario)
     REFERENCES funcionario(cpf) 
@@ -41,8 +41,8 @@ CREATE TABLE coordenador (
 
 CREATE TABLE gerente (
 	cpf_funcionario varchar(14) not null,
-	loja varchar(100) null,
-	meta_loja bigint null,
+    regional varchar(100) null,
+	meta_regional bigint null,
     
     CONSTRAINT cpf_gerente_fk FOREIGN KEY (cpf_funcionario)
     REFERENCES funcionario(cpf) 
