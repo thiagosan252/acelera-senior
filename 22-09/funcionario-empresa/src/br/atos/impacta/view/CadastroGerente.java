@@ -126,7 +126,7 @@ public class CadastroGerente implements Telas {
 
 		CadastroGerenteControlador cadastroGerenteControlador = new CadastroGerenteControlador(jFrame,
 				this.jFrameMenuInicial, this.repositorio, jTextField, jTextField1, jTextField2, jTextField3,
-				jTextField4, jTextField5, jTextField6, jTextField7, (gerente != null) ? true : false);
+				jTextField4, jTextField5, jTextField6, jTextField7, this.gerente.getEndereco().getId(), (gerente != null) ? true : false);
 
 		jButton.addActionListener(cadastroGerenteControlador);
 

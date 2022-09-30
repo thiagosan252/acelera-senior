@@ -126,7 +126,7 @@ public class CadastroCoordenador implements Telas {
 
 		CadastroCoordenadorControlador cadastroCoordenadorControlador = new CadastroCoordenadorControlador(jFrame,
 				this.jFrameMenuInicial, this.repositorio, jTextField, jTextField1, jTextField2, jTextField3,
-				jTextField4, jTextField5, jTextField6, jTextField7, (coordenador != null) ? true : false);
+				jTextField4, jTextField5, jTextField6, jTextField7, this.coordenador.getEndereco().getId(), (coordenador != null) ? true : false);
 		jButton.addActionListener(cadastroCoordenadorControlador);
 
 		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);

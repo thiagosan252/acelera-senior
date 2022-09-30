@@ -28,11 +28,12 @@ public class CadastroCoordenadorControlador implements ActionListener {
 	JTextField estadoJTextField;
 	JTextField ruaJTextField;
 	JTextField casaJTextField;
+	int enderecoId;
 
 	public CadastroCoordenadorControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial,
 			RepositorioCoordenador repositorio, JTextField nomeJTextField, JTextField cpfJTextField,
 			JTextField lojaJTextField, JTextField metaDaLojaJTextField, JTextField horasTrabJTextField, JTextField estadoJTextField,
-			JTextField ruaJTextField, JTextField casaJTextField, Boolean edit) {
+			JTextField ruaJTextField, JTextField casaJTextField, int enderecoId, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -45,6 +46,7 @@ public class CadastroCoordenadorControlador implements ActionListener {
 		this.estadoJTextField = estadoJTextField;
 		this.ruaJTextField = ruaJTextField;
 		this.casaJTextField = casaJTextField;
+		this.enderecoId = enderecoId;
 		this.edit = edit;
 	}
 
@@ -77,18 +79,21 @@ public class CadastroCoordenadorControlador implements ActionListener {
 			coordenador.setMetaDaLoja(Double.valueOf(metaDaLojaJTextField.getText()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Valor de meta da loja inválida.");
+			return false;
 		}
 
 		try {
 			coordenador.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
+			return false;
 		}
 		
 		Endereco endereco = new Endereco();
 		endereco.setEstado(estadoJTextField.getText());
 		endereco.setRua(ruaJTextField.getText());
 		endereco.setCasa(casaJTextField.getText());
+		endereco.setId(enderecoId);
 		coordenador.setEndereco(endereco);
 		if (!this.edit) {
 			if (repositorio.salvarCoordenador(coordenador)) {

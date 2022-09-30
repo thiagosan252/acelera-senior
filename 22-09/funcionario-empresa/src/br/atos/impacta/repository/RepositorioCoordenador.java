@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.atos.impacta.model.Coordenador;
+import br.atos.impacta.model.Funcionario;
 import br.atos.impacta.model.ICoordenador;
+import br.impacta.persistencia.CoordenadorDAO;
+import br.impacta.persistencia.EnderecoDAO;
+import br.impacta.persistencia.FuncionarioDAO;
+import br.impacta.persistencia.SalarioDAO;
 
 public class RepositorioCoordenador implements ICoordenador {
 
@@ -12,50 +17,55 @@ public class RepositorioCoordenador implements ICoordenador {
 
 	@Override
 	public boolean salvarCoordenador(Coordenador coordenador) {
-
+		boolean bRet = false;
 		try {
 			coordenadores.add(coordenador);
+			Funcionario funcionario = new Funcionario(coordenador.getNome(), coordenador.getSalarioLiquido(),
+					coordenador.getCpf());
+			funcionario.setEndereco(coordenador.getEndereco());
+			bRet = FuncionarioDAO.salvarFuncionario(funcionario);
+			if (bRet)
+				bRet = CoordenadorDAO.salvarCoordenador(coordenador);
 			System.out.println("Cadastrado = " + coordenador.toString() + " | " + coordenador.getEndereco().toString());
 		} catch (Exception e) {
 			System.out.println("Erro ao cadastrar: " + e);
-			return false;
+			bRet = false;
 		}
-		return true;
+		return bRet;
 	}
 
 	@Override
 	public List<Coordenador> listarCoordenadores() {
-		return this.coordenadores;
+		return CoordenadorDAO.buscaCoordenador(null);
 	}
 
 	@Override
 	public boolean deletarCoordenador(String cpf) {
-		return coordenadores.removeIf(c -> c.getCpf().equals(cpf));
+		return FuncionarioDAO.deletarFuncionario(cpf);
 	}
 
 	@Override
 	public boolean alterarCoordenador(Coordenador coordenador, String cpf) {
+		boolean bRet = false;
 		try {
-			coordenadores.stream().filter(c -> c.getCpf().equals(cpf)).peek(d -> {
-				d.setNome(coordenador.getNome());
-				d.setLoja(coordenador.getLoja());
-				d.setMetaDaLoja(coordenador.getMetaDaLoja());
-				d.setSalarioLiquido(coordenador.getSalarioLiquido());
-			}).findFirst();
+			Funcionario funcionario = new Funcionario();
+			funcionario.setCpf(cpf);
+			funcionario.setNome(coordenador.getNome());
+			FuncionarioDAO.atualizarFuncionario(funcionario);
+			CoordenadorDAO.atualizarCoordenador(coordenador);
+			EnderecoDAO.atualizarEndereco(coordenador.getEndereco());
+			SalarioDAO.atualizarSalario(cpf, coordenador.getSalarioLiquido());
+
+			bRet = true;
 		} catch (Exception e) {
 			System.out.println("Erro ao atualizar: " + e);
-			return false;
 		}
-		return true;
+		return bRet;
 	}
 
 	@Override
 	public boolean verificarDuplicidade(String cpf) {
-		Coordenador coordenador = coordenadores.stream().filter(c -> c.getCpf().equals(cpf)).findFirst().orElse(null);
-		if (coordenador == null)
-			return false;
-		else
-			return true;
+		return FuncionarioDAO.verificaSeExiste(cpf);
 	}
 
 }

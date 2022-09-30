@@ -2,6 +2,7 @@ package br.atos.impacta.model;
 
 public class Endereco {
 
+	private int id;
 	private String estado;
 	private String rua;
 	private String casa;
@@ -34,7 +35,13 @@ public class Endereco {
 	public String toString() {
 		return "Endereco [estado = " + estado + ", rua = " + rua + ", casa = " + casa + "]";
 	}
-	
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 }

@@ -52,11 +52,11 @@ public class ListarGerente implements Telas {
 
 		JTable jTable = new JTable(linhas, colunas);
 		jTable.setBounds(30, 40, 200, 300);
-		
+
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		JPanel jPanel = new JPanel();
 		jPanel.add(jScrollPane);
-		
+
 		JButton jButton1 = new JButton(MENU_BACK_BUTTON_TEXT);
 		jPanel.add(jButton1);
 		jButton1.addActionListener(new ActionListener() {
@@ -96,8 +96,13 @@ public class ListarGerente implements Telas {
 					+ new BigDecimal(gerente.getSalarioLiquido()).setScale(2, RoundingMode.HALF_EVEN).toPlainString();
 			posicaoColuna++;
 
-			linhas[posicaoLinha][posicaoColuna] = gerente.getEndereco().getRua() + ", "
-					+ gerente.getEndereco().getCasa() + " - " + gerente.getEndereco().getEstado();
+			if (gerente.getEndereco().getRua() != null && gerente.getEndereco().getEstado() != null
+					&& gerente.getEndereco().getRua() != null) {
+				linhas[posicaoLinha][posicaoColuna] = gerente.getEndereco().getRua() + ", "
+						+ gerente.getEndereco().getCasa() + " - " + gerente.getEndereco().getEstado();
+			} else {
+				linhas[posicaoLinha][posicaoColuna] = "";
+			}
 
 			posicaoColuna = 0;
 			posicaoLinha++;

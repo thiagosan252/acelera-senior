@@ -24,15 +24,16 @@ public class CadastroGerenteControlador implements ActionListener {
 	JTextField regionalJTextField;
 	JTextField metaRegionalJTextField;
 	JTextField horasTrabJTextField;
-	
+
 	JTextField estadoJTextField;
 	JTextField ruaJTextField;
 	JTextField casaJTextField;
+	int enderecoId;
 
 	public CadastroGerenteControlador(JFrame jFrameAtual, JFrame jFrameMenuInicial, RepositorioGerente repositorio,
 			JTextField nomeJTextField, JTextField cpfJTextField, JTextField regionalJTextField,
 			JTextField metaRegionalJTextField, JTextField horasTrabJTextField, JTextField estadoJTextField,
-			JTextField ruaJTextField, JTextField casaJTextField, Boolean edit) {
+			JTextField ruaJTextField, JTextField casaJTextField, int enderecoId, Boolean edit) {
 		super();
 		this.jFrameAtual = jFrameAtual;
 		this.jFrameMenuInicial = jFrameMenuInicial;
@@ -45,6 +46,7 @@ public class CadastroGerenteControlador implements ActionListener {
 		this.estadoJTextField = estadoJTextField;
 		this.ruaJTextField = ruaJTextField;
 		this.casaJTextField = casaJTextField;
+		this.enderecoId = enderecoId;
 		this.edit = edit;
 	}
 
@@ -79,18 +81,20 @@ public class CadastroGerenteControlador implements ActionListener {
 			gerente.setMetaRegional(Double.valueOf(metaRegionalJTextField.getText()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Valor de meta regional inválido.");
+			return false;
 		}
 		try {
 			gerente.calculaSalario(Double.valueOf(horasTrabJTextField.getText()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Horas trabalhadas inválidas.");
-
+			return false;
 		}
-		
+
 		Endereco endereco = new Endereco();
 		endereco.setEstado(estadoJTextField.getText());
 		endereco.setRua(ruaJTextField.getText());
 		endereco.setCasa(casaJTextField.getText());
+		endereco.setId(enderecoId);
 		gerente.setEndereco(endereco);
 		if (!this.edit) {
 			if (repositorio.salvarGerente(gerente)) {

@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.atos.impacta.repository.RepositorioCoordenador;
+import br.atos.impacta.view.CadastroCoordenador;
+import br.impacta.persistencia.CoordenadorDAO;
 
 public class AlterarCoordenadorControlador implements ActionListener {
 
@@ -29,10 +31,13 @@ public class AlterarCoordenadorControlador implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (repositorio.verificarDuplicidade(jTextField.getText())) {
+		String id = jTextField.getText();
+		if (repositorio.verificarDuplicidade(id)) {
 			JOptionPane.showMessageDialog(null, "Coordenador localizado com sucesso.");
-//			jFrameAtual.setVisible(false);
-//			jFrameMenuInicial.setVisible(true);
+			jFrameAtual.setVisible(false);
+			CadastroCoordenador cadastroCoordenador = new CadastroCoordenador(jFrameAtual, repositorio, CoordenadorDAO.buscaCoordenador(id).get(0));
+			cadastroCoordenador.showMenu();
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Coordenador não cadastrado.");
 		}

@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import br.atos.impacta.model.Gerente;
 import br.atos.impacta.repository.RepositorioGerente;
 import br.atos.impacta.view.CadastroGerente;
+import br.impacta.persistencia.GerenteDAO;
 
 public class AlterarGerenteControlador implements ActionListener {
 
@@ -35,10 +35,9 @@ public class AlterarGerenteControlador implements ActionListener {
 		if (repositorio.verificarDuplicidade(id)) {
 			JOptionPane.showMessageDialog(null, "Gerente localizado com sucesso.");
 			jFrameAtual.setVisible(false);
-			Gerente gerente = repositorio.listarGerentes().stream().filter(g -> g.getCpf().equals(id)).findFirst()
-					.orElse(null);
-			CadastroGerente cadastroGerente = new CadastroGerente(jFrameAtual, repositorio, gerente);
+			CadastroGerente cadastroGerente = new CadastroGerente(jFrameAtual, repositorio, GerenteDAO.buscaGerente(id).get(0));
 			cadastroGerente.showMenu();
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Gerente não cadastrado.");
 		}
