@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS funcionario;
 DROP TABLE IF EXISTS endereco;
 
 CREATE TABLE endereco (
-	id int primary key not null,
+	id int auto_increment primary key not null,
 	rua varchar(100) not null,
     estado varchar(100) not null,
 	numero integer not null
@@ -16,8 +16,8 @@ CREATE TABLE funcionario (
     cpf varchar(14) primary key not null,
     endereco_id int null,
     
-    CONSTRAINT endereco_fk FOREIGN KEY (endereco_id)
-    REFERENCES endereco(id) 
+    CONSTRAINT endereco_funcionario_fk FOREIGN KEY (endereco_id)
+    REFERENCES endereco(id)
 
 );
 
@@ -26,7 +26,8 @@ CREATE TABLE salario (
     salario_liquido bigint null,
     
 	CONSTRAINT cpf_salario_fk FOREIGN KEY (cpf_funcionario)
-    REFERENCES funcionario(cpf) 
+    REFERENCES funcionario(cpf) ON DELETE CASCADE
+
 );
 
 CREATE TABLE coordenador (
@@ -35,7 +36,7 @@ CREATE TABLE coordenador (
 	meta_loja bigint null,
     
     CONSTRAINT cpf_coordenador_fk FOREIGN KEY (cpf_funcionario)
-    REFERENCES funcionario(cpf) 
+    REFERENCES funcionario(cpf) ON DELETE CASCADE
 
 );
 
@@ -45,6 +46,6 @@ CREATE TABLE gerente (
 	meta_regional bigint null,
     
     CONSTRAINT cpf_gerente_fk FOREIGN KEY (cpf_funcionario)
-    REFERENCES funcionario(cpf) 
+    REFERENCES funcionario(cpf) ON DELETE CASCADE
 
 );
