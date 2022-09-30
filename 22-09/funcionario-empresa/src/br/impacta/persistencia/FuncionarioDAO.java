@@ -113,8 +113,12 @@ public class FuncionarioDAO {
 
 			pstm.setString(1, cpf);
 
-			pstm.execute();
-			bRet = true;
+			int count = pstm.executeUpdate();
+			if (count > 0)
+				bRet = true;
+			else
+				bRet = false;
+
 		} catch (Exception e) {
 			System.out.println("Erro ao deletar funcionario: " + e.getMessage());
 		} finally {
