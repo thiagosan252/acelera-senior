@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head></h:head>
+<body>
+	<h:form>
+		<h:outputLabel value="Nome: " />
+		<h:inputText value="#{cadastroProfessor.nome}" />
+		<br />
+		<h:outputLabel value="CPF: " />
+		<h:inputText value="#{cadastroProfessor.cpf}" />
+		<br />
+		<h:outputLabel value="Cidade: " />
+		<h:inputText value="#{cadastroProfessor.cidade}" />
+		<br />
+		<h:outputLabel value="Rua: " />
+		<h:inputText value="#{cadastroProfessor.rua}" />
+		<br />
+		<h:outputLabel value="Número: " />
+		<h:inputText value="#{cadastroProfessor.numero}" />
+		<br />
+		<h:outputLabel value="Disciplina: " />
+		<h:inputText value="#{cadastroProfessor.disciplina}" />
+		<br />
+		<h:outputLabel value="Salário " />
+		<h:inputText value="#{cadastroProfessor.salario}" />
+		<br />
+
+		<h:commandButton action="#{cadastroProfessor.cadastrar}"
+			value="Cadastrar" />
+
+		<h:messages errorStyle="color: red;" />
+		<c:if test="#{cadastroProfessor.listaProfessores.size() > 0}">
+			<h:dataTable value="#{cadastroProfessor.listaProfessores}" var="item">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{item.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">CPF</f:facet>
+					#{item.cpf}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Cidade</f:facet>
+					#{item.endereco.cidade}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Rua</f:facet>
+					#{item.endereco.rua}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Número</f:facet>
+					#{item.endereco.numero}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Disciplina</f:facet>
+					#{item.disciplina}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Salário</f:facet>
+					#{item.salario}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ação</f:facet>
+					<h:commandLink action="#{cadastroProfessor.remover(item)}" value="Deletar" />
+				</h:column>
+			</h:dataTable>
+		</c:if>
+	</h:form>
+</body>
+</html>
