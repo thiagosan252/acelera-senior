@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<h:form id="form">
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Nome: " />
+			<p:inputText value="#{cadastroProfessor.nome}" />
+
+			<p:outputLabel value="CPF: " />
+			<p:inputText value="#{cadastroProfessor.cpf}" />
+
+			<p:outputLabel value="Cidade: " />
+			<p:inputText value="#{cadastroProfessor.cidade}" />
+
+			<p:outputLabel value="Rua: " />
+			<p:inputText value="#{cadastroProfessor.rua}" />
+
+			<p:outputLabel value="Número: " />
+			<p:inputText value="#{cadastroProfessor.numero}" />
+
+			<p:outputLabel value="Disciplina: " />
+			<p:inputText value="#{cadastroProfessor.disciplina}" />
+
+			<p:outputLabel value="Salário " />
+			<p:inputText value="#{cadastroProfessor.salario}" />
+
+
+			<p:commandButton action="#{cadastroProfessor.cadastrar}"
+				value="Cadastrar" update="form formTabela"/>
+		</h:panelGrid>
+		<h:messages errorStyle="color: red;" />
+	</h:form>
+	<h:form id="formTabela">
+		<c:if test="#{cadastroProfessor.listaProfessores.size() > 0}">
+			<h:dataTable value="#{cadastroProfessor.listaProfessores}" var="item">
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					#{item.nome}
+				</p:column>
+				<p:column>
+					<f:facet name="header">CPF</f:facet>
+					#{item.cpf}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Cidade</f:facet>
+					#{item.endereco.cidade}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Rua</f:facet>
+					#{item.endereco.rua}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Número</f:facet>
+					#{item.endereco.numero}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Disciplina</f:facet>
+					#{item.disciplina}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Salário</f:facet>
+					#{item.salario}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Ação</f:facet>
+					<h:commandLink action="#{cadastroProfessor.remover(item)}"
+						value="Deletar" />
+				</p:column>
+			</h:dataTable>
+		</c:if>
+	</h:form>
+</body>
+</html>
