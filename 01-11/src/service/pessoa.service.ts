@@ -8,6 +8,10 @@ export class PessoaService {
         return api.get('/pessoas');
     }
 
+    static getById(id: string): Promise<AxiosResponse<Pessoa, any>> {
+        return api.get(`/pessoas/${id}`);
+    }
+
     static save(data: Pessoa): Promise<AxiosResponse<Pessoa, any>> {
         return api.post('/pessoas', data);
     }

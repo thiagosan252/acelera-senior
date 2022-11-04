@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import { PessoaService } from '@/service/pessoa.service'
+import type { Pessoa } from '@/model/Pessoa';
+import { PessoaService } from '@/service/pessoa.service';
 import { reactive } from 'vue';
 
-interface AddPessoas {
-  nome: string,
-  idade: string,
-  profissao: string,
-}
-
-const obj: AddPessoas = reactive({
+const obj: Pessoa = reactive({
   nome: '',
   idade: '',
   profissao: '',
 })
 
 const addPessoa = async () => {
-  const resp = await PessoaService.save({
-    nome: obj.nome,
-    idade: obj.idade,
-    profissao: obj.profissao
-  })
-  location.reload()
+  try {
+    await PessoaService.save({
+      nome: obj.nome,
+      idade: obj.idade,
+      profissao: obj.profissao
+    })
+    location.reload()
+  } catch (error) {
+
+  }
 }
 
 </script>

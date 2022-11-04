@@ -1,5 +1,5 @@
 export class Pessoa {
-    id?: number
+    id?: string
     nome?: string
     idade?: string
     profissao?: string

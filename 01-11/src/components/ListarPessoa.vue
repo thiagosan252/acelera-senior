@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
 import type { Pessoa } from "@/model/Pessoa";
-import { PessoaService } from '@/service/pessoa.service'
+import router from '@/router';
+import { PessoaService } from '@/service/pessoa.service';
 import { AxiosError } from 'axios';
+import { onMounted, reactive } from 'vue';
 
 interface ListarPessoas {
     pessoas: Pessoa[]
@@ -27,6 +28,7 @@ const getPessoas = async () => {
 
 const alterar = async (id: number) => {
     console.log("alterar", id)
+    router.push('/editar/' + id)
 }
 
 const deletar = async (id: number) => {
@@ -59,7 +61,7 @@ onMounted(() => {
                 </b-button-group>
             </template>
             <template #empty="scope">
-                <h4>Nenhum item encontrado</h4>
+                <h4 style="text-align: center;">Nenhum item encontrado</h4>
             </template>
         </b-table>
     </div>
