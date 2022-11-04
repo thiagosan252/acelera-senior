@@ -2,6 +2,7 @@
 import { reactive, onMounted } from 'vue'
 import type { Pessoa } from "@/model/Pessoa";
 import { PessoaService } from '@/service/pessoa.service'
+import { AxiosError } from 'axios';
 
 interface ListarPessoas {
     pessoas: Pessoa[]
@@ -14,7 +15,8 @@ const obj: ListarPessoas = reactive({
         { key: 'id', label: 'ID' },
         { key: 'nome', label: 'Nome' },
         { key: 'idade', label: 'Idade' },
-        { key: 'profissao', label: 'Profissão' }
+        { key: 'profissao', label: 'Profissão' },
+        { key: 'options', label: 'Opções' }
     ]
 })
 
@@ -23,11 +25,42 @@ const getPessoas = async () => {
     obj.pessoas = resp.data
 }
 
+const alterar = async (id: number) => {
+    console.log("alterar", id)
+}
+
+const deletar = async (id: number) => {
+    try {
+        await PessoaService.del(id)
+        getPessoas()
+    } catch (error) {
+        if (error instanceof AxiosError)
+            console.log(error.response)
+    }
+}
+
+
 onMounted(() => {
     getPessoas()
 })
 </script>
 
 <template>
-    <b-table striped hover :items="obj.pessoas" :fields="obj.fields"></b-table>
+    <div>
+        <b-table striped hover responsive="sm" :items="obj.pessoas" :fields="obj.fields" show-empty>
+            <template #cell(options)="row">
+                <b-button-group>
+                    <b-button size="sm" @click="alterar(row.item.id)" variant="primary">
+                        ALTERAR
+                    </b-button>
+                    <b-button size="sm" @click="deletar(row.item.id)" variant="danger">
+                        DELETAR
+                    </b-button>
+                </b-button-group>
+            </template>
+            <template #empty="scope">
+                <h4>Nenhum item encontrado</h4>
+            </template>
+        </b-table>
+    </div>
 </template>

@@ -11,4 +11,8 @@ export class PessoaService {
     static save(data: Pessoa): Promise<AxiosResponse<Pessoa, any>> {
         return api.post('/pessoas', data);
     }
+
+    static del(id: number): Promise<AxiosResponse<Pessoa, any>> {
+        return api.delete(`/pessoas/${id}`);
+    }
 }
