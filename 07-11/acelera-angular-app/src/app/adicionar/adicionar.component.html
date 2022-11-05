@@ -1,0 +1,27 @@
+<div class="p-5">
+  <span class="text-4xl">Adicionar</span>
+
+  <div class="py-5">
+    <form [formGroup]="form" (ngSubmit)="novo()">
+      <div class="flex flex-row items-center">
+        <label for="nome" class="px-2">Nome *:</label>
+        <input type="text" formControlName="nome" class="form-input px-4 py-1 rounded-md">
+      </div>
+
+      <div class="flex flex-row items-center">
+        <label for="nome" class="px-2">Idade *:</label>
+        <input type="text" formControlName="idade" class="form-input px-4 py-1 rounded-md">
+      </div>
+      <div class="flex flex-row items-center">
+        <label for="nome" class="px-2">Profissão *:</label>
+        <input type="text" formControlName="profissao" class="form-input px-4 py-1 rounded-md">
+      </div>
+
+      <button type="submit"
+        class="bg-sky-600 hover:bg-sky-500 active:bg-sky-700 disabled:bg-sky-500 disabled:shadow-none disabled:cursor-not-allowed font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 text-white">Novo</button>
+
+    </form>
+  </div>
+
+
+</div>

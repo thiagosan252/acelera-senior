@@ -1,0 +1,22 @@
+<div class="py-5">
+  <table class="table-fixed w-full">
+    <thead>
+      <tr>
+        <th *ngFor="let item of headers;">{{item}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of data;">
+        <td class="text-center">{{ obj.nome }}</td>
+        <td class="text-center">{{ obj.idade }}</td>
+        <td class="text-center">{{ obj.profissao }}</td>
+        <td class="flex flex-row text-center">
+          <button (click)="editar(obj.id)"
+            class="bg-sky-600 hover:bg-sky-500 active:bg-sky-700 disabled:bg-sky-500 disabled:shadow-none disabled:cursor-not-allowed font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 text-white">Editar</button>
+          <button (click)="remover(obj.id)"
+            class="bg-red-600 hover:bg-red-500 active:bg-red-700 disabled:bg-red-500 disabled:shadow-none disabled:cursor-not-allowed font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 text-white">Remover</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
