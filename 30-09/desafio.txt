@@ -1,0 +1,7 @@
+Para executar o JAR:
+
+Adicionei o mysql.jar dentro do classpath e exportei como:
+
+- "Runnable JAR File" > Package required libraries into generated JAR
+
+Depois disso é só rodar "java -jar Funcionario.jar"
